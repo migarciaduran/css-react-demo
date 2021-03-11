@@ -1,13 +1,6 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* This line is to inject Tailwind’s base style, which is basically Normalize.css plus some additional styling provided by Tailwind. */
+@tailwind base;
+/* This injects component classes registered by plugins that are found in tailwind.config.js file. */
+@tailwind components;
+/* This injects all of utility classes provided by Tailwind CSS. These are also generated based on the config file. */
+@tailwind utilities;

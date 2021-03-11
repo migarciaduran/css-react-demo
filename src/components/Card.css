@@ -1,0 +1,5 @@
+.c-bg-opacity
+{
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    opacity: .9;
+}
