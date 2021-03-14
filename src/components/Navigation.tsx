@@ -1,14 +1,16 @@
 // https://github.com/briancodex/tailwindcss-react-v1
 
 import React, { useState } from 'react';
+import './Navigation.css'
 
 const Navbar = () => {
   const [isMenuActive, setIsMenuActive] = useState(Boolean(false));
 
-  function getNavigationMode() {
+  const getNavigationMode = () => {
+    let menuConstant = 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen transitionEaseLeft';
     return isMenuActive
-      ? 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen left-0'
-      : 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen left-full';
+      ? `${menuConstant} left-0`
+      : `${menuConstant} left-full`
   }
 
   return (
