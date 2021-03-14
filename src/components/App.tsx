@@ -15,8 +15,8 @@ function App() {
       <Navigation />
       <Switch>
         <Route path="/">
-          <Home/>
-          <Body/>
+          {/* <Home/>
+          <Body/> */}
         </Route>
       </Switch>
     </Router>
