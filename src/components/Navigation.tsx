@@ -1,8 +1,16 @@
 // https://github.com/briancodex/tailwindcss-react-v1
 
-import React from 'react';
+import React, { useState } from 'react';
 
 const Navbar = () => {
+  const [isMenuActive, setIsMenuActive] = useState(Boolean(false));
+
+  function getNavigationMode() {
+    return isMenuActive
+      ? 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen left-0'
+      : 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen left-full';
+  }
+
   return (
     <nav className="fixed left-0 top-0 w-screen h-auto block">
       <div className="flex items-center justify-center bg-gray-700 w-full min-h-0">
@@ -11,7 +19,7 @@ const Navbar = () => {
             <a href="#hero"><h1 className="uppercase text-2xl text-white">Mike</h1></a>
           </div>
           <div>
-            <div className="relative text-white w-full h-full flex justify-center items-center z-20 p-1 cursor-pointer hover:text-red-600">
+            <div onClick={() => setIsMenuActive(!isMenuActive)} className="relative text-white w-full h-full flex justify-center items-center z-20 p-1 cursor-pointer hover:text-red-600">
               <svg
                 className='w-8 h-8'
                 fill='none'
@@ -28,7 +36,7 @@ const Navbar = () => {
               </svg>
             </div>
 
-            <ul className="flex flex-col justify-center items-center bg-gray-800 text-white absolute left-full top-0 w-screen h-screen">
+            <ul className={`${getNavigationMode()}`}>
               <li><a href="#hero" data-after="Home" className="text-white font-medium text-4xl tracking-widest block p-5 hover:text-red-600">Home</a></li>
               <li><a href="#services" data-after="Service" className="text-white font-medium text-4xl tracking-widest block p-5 hover:text-red-600">Services</a></li>
               <li><a href="#projects" data-after="Projects" className="text-white font-medium text-4xl tracking-widest block p-5 hover:text-red-600">Projects</a></li>
