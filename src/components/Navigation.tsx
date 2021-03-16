@@ -1,10 +1,15 @@
 // https://github.com/briancodex/tailwindcss-react-v1
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, EventHandler } from 'react';
 import './Navigation.scss'
 
 const Navbar = () => {
   const [isMenuActive, setIsMenuActive] = useState(Boolean(false));
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(Number(0));
+  const navigationBar = React.useRef<HTMLDivElement>(null);
+  const navigationBarTop = React.useRef<HTMLDivElement>(null);
+
 
   const getNavigationMode = () => {
     let menuConstant = 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen transitionEaseLeft md:h-auto md:flex-row md:static md:w-min md:bg-transparent';
@@ -13,9 +18,42 @@ const Navbar = () => {
       : `${menuConstant} left-full`
   }
 
+  useEffect(() => {
+    const onScroll = (e: any) => {
+      setIsScrollingDown(e.target.documentElement.scrollTop > scrollPosition);
+      setScrollPosition(e.target.documentElement.scrollTop);
+    }
+    
+    window.addEventListener('scroll', onScroll);
+  }, [scrollPosition]);
+
+  useEffect(() => {
+    if (navigationBar.current && navigationBarTop.current) {
+      if (scrollPosition > window.innerHeight) {
+        navigationBarTop.current.classList.add('fixed');
+        navigationBarTop.current.classList.remove('absolute');
+        if (isScrollingDown) {
+          navigationBar.current.classList.add('bg-gray-700');
+          navigationBar.current.classList.remove('transparent');
+          navigationBar.current.classList.remove('hidden');
+        } else {
+          navigationBar.current.classList.remove('bg-gray-700');
+          navigationBar.current.classList.remove("transparent");
+          navigationBar.current.classList.add('hidden');
+        }
+      } else {
+        navigationBarTop.current.classList.remove('fixed');
+        navigationBarTop.current.classList.add('absolute');
+        navigationBar.current.classList.remove('bg-gray-700');
+        navigationBar.current.classList.remove('hidden');
+        navigationBar.current.classList.add("transparent");
+      }
+    }
+  }, [scrollPosition, isScrollingDown])
+
   return (
-    <nav className="fixed left-0 top-0 w-screen h-auto block z-50">
-      <div className="flex items-center justify-center bg-gray-700 w-full min-h-0">
+    <nav ref={navigationBarTop} className="absolute left-0 top-0 w-screen h-auto block z-50">
+      <div ref={navigationBar} className="flex items-center justify-center w-full min-h-0">
         <div className="flex items-center justify-between w-full h-full py-1 px-3 my-2 md:my-0 md:py-0">
           <div>
             <a href="#hero"><h1 className="uppercase text-2xl text-white">Mike</h1></a>
