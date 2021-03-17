@@ -1,6 +1,6 @@
 // https://github.com/briancodex/tailwindcss-react-v1
 
-import React, { useState, useEffect, useRef, EventHandler } from 'react';
+import React, { useState, useEffect} from 'react';
 import './Navigation.scss'
 
 const Navbar = () => {
@@ -8,7 +8,6 @@ const Navbar = () => {
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(Number(0));
   const navigationBar = React.useRef<HTMLDivElement>(null);
-  const navigationBarTop = React.useRef<HTMLDivElement>(null);
   const navigationItemsRef = React.useRef<HTMLUListElement>(null);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const Navbar = () => {
   }, [scrollPosition]);
 
   useEffect(() => {
-    if (navigationBar.current == null || navigationBarTop.current == null) {
+    if (navigationBar.current == null) {
       return;
     }
 
@@ -50,7 +49,7 @@ const Navbar = () => {
   }, [scrollPosition, isScrollingDown])
 
   return (
-    <nav ref={navigationBarTop} className="fixed left-0 top-0 w-full h-auto block z-50">
+    <nav className="fixed left-0 top-0 w-full h-auto block z-50">
       <div ref={navigationBar} className="flex items-center justify-center w-full min-h-0">
         <div className="flex items-center justify-between w-full h-full py-1 px-3 my-2 md:my-0 md:py-0">
           <div>
