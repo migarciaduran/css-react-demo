@@ -20,7 +20,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const onScroll = (e: any) => {
-      setIsScrollingDown(e.target.documentElement.scrollTop > scrollPosition);
+      setIsScrollingDown(e.target.documentElement.scrollTop <= scrollPosition);
       setScrollPosition(e.target.documentElement.scrollTop);
     }
     
@@ -52,11 +52,11 @@ const Navbar = () => {
   }, [scrollPosition, isScrollingDown])
 
   return (
-    <nav ref={navigationBarTop} className="absolute left-0 top-0 w-screen h-auto block z-50">
+    <nav ref={navigationBarTop} className="absolute left-0 top-0 w-full h-auto block z-50">
       <div ref={navigationBar} className="flex items-center justify-center w-full min-h-0">
         <div className="flex items-center justify-between w-full h-full py-1 px-3 my-2 md:my-0 md:py-0">
           <div>
-            <a href="#hero"><h1 className="uppercase text-2xl text-white">Mike</h1></a>
+            <a href="#hero"><h1 className="text-2xl text-white">Logo</h1></a>
           </div>
           <div>
             <div onClick={() => setIsMenuActive(!isMenuActive)} className="relative text-white w-full h-full flex justify-center items-center z-20 mr-4 cursor-pointer hover:text-red-600 md:hidden">
