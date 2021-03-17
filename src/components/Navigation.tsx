@@ -9,21 +9,29 @@ const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(Number(0));
   const navigationBar = React.useRef<HTMLDivElement>(null);
   const navigationBarTop = React.useRef<HTMLDivElement>(null);
+  const navigationItemsRef = React.useRef<HTMLUListElement>(null);
 
+  useEffect(() => {
+    if (navigationItemsRef.current == null) {
+      return;
+    }
 
-  const getNavigationMode = () => {
-    let menuConstant = 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen transitionEaseLeft md:h-auto md:flex-row md:static md:w-min md:bg-transparent';
-    return isMenuActive
-      ? `${menuConstant} left-0`
-      : `${menuConstant} left-full`
-  }
+    if (isMenuActive) {
+      navigationItemsRef.current.classList.add('left-0');
+      navigationItemsRef.current.classList.remove('left-full');
+
+    } else {
+      navigationItemsRef.current.classList.remove('left-0');
+      navigationItemsRef.current.classList.add('left-full');
+    }
+  });
 
   useEffect(() => {
     const onScroll = (e: any) => {
       setIsScrollingDown(e.target.documentElement.scrollTop <= scrollPosition);
       setScrollPosition(e.target.documentElement.scrollTop);
     }
-    
+
     window.addEventListener('scroll', onScroll);
   }, [scrollPosition]);
 
@@ -34,24 +42,15 @@ const Navbar = () => {
 
     let isScrollAtBottomOfScreen = scrollPosition > window.innerHeight;
     if (isScrollAtBottomOfScreen) {
-      navigationBarTop.current.classList.replace('absolute','fixed');
-      if (isScrollingDown) {
-        navigationBar.current.classList.add('bg-gray-700');
-        navigationBar.current.classList.remove('opacity-0');
-      } else {
-        navigationBar.current.classList.remove('bg-gray-700');
-        navigationBar.current.classList.add('opacity-0');
-      }
+      navigationBar.current.classList.add('bg-gray-700');
     } else {
-      navigationBarTop.current.classList.replace('fixed','absolute');
       navigationBar.current.classList.remove('bg-gray-700');
-      navigationBar.current.classList.remove('opacity-0');
     }
-    
+
   }, [scrollPosition, isScrollingDown])
 
   return (
-    <nav ref={navigationBarTop} className="absolute left-0 top-0 w-full h-auto block z-50">
+    <nav ref={navigationBarTop} className="fixed left-0 top-0 w-full h-auto block z-50">
       <div ref={navigationBar} className="flex items-center justify-center w-full min-h-0">
         <div className="flex items-center justify-between w-full h-full py-1 px-3 my-2 md:my-0 md:py-0">
           <div>
@@ -75,7 +74,7 @@ const Navbar = () => {
               </svg>
             </div>
 
-            <ul className={`${getNavigationMode()}`}>
+            <ul ref={navigationItemsRef} className="flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 h-screen transitionEaseLeft md:h-auto md:flex-row md:static md:w-min md:bg-transparent w-screen">
               <li><a href="#hero" className="text-white font-medium text-4xl tracking-widest block p-5 hover:text-red-600 md:inline-block md:text-lg md:font-normal">Home</a></li>
               <li><a href="#services" className="text-white font-medium text-4xl tracking-widest block p-5 hover:text-red-600 md:inline-block md:text-lg md:font-normal">Services</a></li>
               <li><a href="#projects" className="text-white font-medium text-4xl tracking-widest block p-5 hover:text-red-600 md:inline-block md:text-lg md:font-normal">Projects</a></li>
