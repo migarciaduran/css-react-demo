@@ -2,6 +2,8 @@ import React from 'react';
 import Navigation from './Navigation';
 import Home from './Home';
 import Body from './Body';
+import Footer from './Footer';
+
 
 import {
   BrowserRouter as Router,
@@ -17,6 +19,7 @@ function App() {
         <Route path="/">
           <Home/>
           <Body/>
+          <Footer/>
         </Route>
       </Switch>
     </Router>
