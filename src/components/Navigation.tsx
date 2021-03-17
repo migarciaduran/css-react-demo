@@ -12,7 +12,7 @@ const Navbar = () => {
 
 
   const getNavigationMode = () => {
-    let menuConstant = 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen transition-left ease-in-out duration-500 md:h-auto md:flex-row md:static md:w-min md:bg-transparent';
+    let menuConstant = 'flex flex-col justify-center items-center bg-gray-800 text-white absolute top-0 w-screen h-screen transitionEaseLeft md:h-auto md:flex-row md:static md:w-min md:bg-transparent';
     return isMenuActive
       ? `${menuConstant} left-0`
       : `${menuConstant} left-full`
@@ -28,36 +28,36 @@ const Navbar = () => {
   }, [scrollPosition]);
 
   useEffect(() => {
-    // Do not execute effects if either navigationBar or if navigationBarTop is null
-    if (!navigationBar.current || !navigationBarTop.current) {
+    if (navigationBar.current == null || navigationBarTop.current == null) {
       return;
     }
 
-    // If our Scroll position is bigger than a full screen height.
-    if (scrollPosition > window.innerHeight) {
+    let isScrollInBottomOfScreen = scrollPosition > window.innerHeight;
+    if (isScrollInBottomOfScreen) {
       navigationBarTop.current.classList.add('fixed');
       navigationBarTop.current.classList.remove('absolute');
       if (isScrollingDown) {
         navigationBar.current.classList.add('bg-gray-700');
         navigationBar.current.classList.remove('transparent');
-        navigationBar.current.classList.remove('opacity-0');
+        navigationBar.current.classList.remove('hidden');
       } else {
         navigationBar.current.classList.remove('bg-gray-700');
         navigationBar.current.classList.remove("transparent");
-        navigationBar.current.classList.add('opacity-0');
+        navigationBar.current.classList.add('hidden');
       }
     } else {
       navigationBarTop.current.classList.remove('fixed');
       navigationBarTop.current.classList.add('absolute');
       navigationBar.current.classList.remove('bg-gray-700');
-      navigationBar.current.classList.remove('opacity-0');
+      navigationBar.current.classList.remove('hidden');
       navigationBar.current.classList.add("transparent");
     }
+    
   }, [scrollPosition, isScrollingDown])
 
   return (
     <nav ref={navigationBarTop} className="absolute left-0 top-0 w-full h-auto block z-50">
-      <div ref={navigationBar} className="flex items-center justify-center w-full min-h-0 transition ease-in-out duration-700">
+      <div ref={navigationBar} className="flex items-center justify-center w-full min-h-0">
         <div className="flex items-center justify-between w-full h-full py-1 px-3 my-2 md:my-0 md:py-0">
           <div>
             <a href="#hero"><h1 className="text-2xl text-white">Logo</h1></a>
