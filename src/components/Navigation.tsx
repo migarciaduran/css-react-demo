@@ -32,25 +32,20 @@ const Navbar = () => {
       return;
     }
 
-    let isScrollInBottomOfScreen = scrollPosition > window.innerHeight;
-    if (isScrollInBottomOfScreen) {
-      navigationBarTop.current.classList.add('fixed');
-      navigationBarTop.current.classList.remove('absolute');
+    let isScrollAtBottomOfScreen = scrollPosition > window.innerHeight;
+    if (isScrollAtBottomOfScreen) {
+      navigationBarTop.current.classList.replace('absolute','fixed');
       if (isScrollingDown) {
         navigationBar.current.classList.add('bg-gray-700');
-        navigationBar.current.classList.remove('transparent');
-        navigationBar.current.classList.remove('hidden');
+        navigationBar.current.classList.remove('opacity-0');
       } else {
         navigationBar.current.classList.remove('bg-gray-700');
-        navigationBar.current.classList.remove("transparent");
-        navigationBar.current.classList.add('hidden');
+        navigationBar.current.classList.add('opacity-0');
       }
     } else {
-      navigationBarTop.current.classList.remove('fixed');
-      navigationBarTop.current.classList.add('absolute');
+      navigationBarTop.current.classList.replace('fixed','absolute');
       navigationBar.current.classList.remove('bg-gray-700');
-      navigationBar.current.classList.remove('hidden');
-      navigationBar.current.classList.add("transparent");
+      navigationBar.current.classList.remove('opacity-0');
     }
     
   }, [scrollPosition, isScrollingDown])
