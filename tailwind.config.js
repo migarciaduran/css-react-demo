@@ -13,6 +13,11 @@ module.exports = {
         '3/4': '75%',
         '4/5': '80%',
       },
+      transitionProperty: {
+        'left': 'left',
+        'top': 'top',
+        'right': 'right',
+      }
     },
   },
   variants: {
